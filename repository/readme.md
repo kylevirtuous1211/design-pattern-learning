@@ -3,13 +3,14 @@
 ## 1. 最小可行的範例 (Minimal Working Example)
 
 請參考同目錄下的 example.py。
-我們模擬了一個資料庫，並建立了 UserRepository 來負責所有的資料存取操作。UserService (商業邏輯) 透過 Repository 來存取資料，而不是直接操作資料庫。
+
+我們模擬了一個資料庫，並建立了 UserRepository 來負責所有的資料存取操作。UserService (商業邏輯) 透過 Repository 來存取特定的User object，而不是直接在service操作新增一串 dictionary 到資料庫。
 
 ## 2. 使用該 Pattern 的原因 (Why)
 
 Repository Pattern 的核心目的是 將「商業邏輯」與「資料存取邏輯」分離 (Decoupling)。
 
-抽象化：商業邏輯不需要知道底層是 SQL、NoSQL 還是純文字檔。
+抽象化：商業邏輯不需要知道底層DB是 SQL、NoSQL 還是純文字檔。
 
 可測試性：測試商業邏輯時，可以輕鬆換成一個「假」的 Repository (Mock)，而不需要真的連連資料庫。
 
@@ -34,7 +35,8 @@ API Endpoint (Controller) 呼叫 Repository，Repository 呼叫 SQLAlchemy Sessi
 
 * 難以測試：要測試 API 時，必須真的架設一個測試用資料庫，測試速度變慢且環境建置困難。
 
-### Repository Pattern 的最大好處是：業務邏輯層（Service/API）不需要知道資料庫是怎麼實作的。
+### Example
 
-不用寫：SELECT * FROM users WHERE id = 1 (這句 parameter 寫在外面)
-只要寫：repo.find_by_id(1) (這句乾淨清爽)
+* 不用寫：SELECT * FROM users WHERE id = 1 (這句 parameter 寫在外面)
+* 只要寫：repo.find_by_id(1) (這句乾淨清爽)
+* 以及換資料庫種類時，可以直接改 DB 的程式，使其也能使用 User Object type
